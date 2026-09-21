@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================================
+  JANNET TRABELSI  |  PORTFOLIO
+  ============================================================================
+  This is a single, self-contained web page. No build step, no frameworks.
+  Open it in any browser to view; open it in any text editor to change it.
+
+  HOW TO EDIT
+  ============================================================================
+  1. CHANGE COLORS / FONTS
+     Jump to the ":root" block inside the style tag near the top. Every color
+     and font is a variable there; edit it once and it updates everywhere.
+
+  2. CHANGE TEXT
+     Each section begins with a labeled banner (for example, a line that reads
+     "===== HERO ====="). Find the section, then edit the words shown on the
+     page.
+
+  3. ADD A PROJECT
+     In the WORK section, copy one project block (an article with class
+     "proj"), paste it just below, and edit the text inside.
+
+  4. LINK A NEW REPORT
+     Put the PDF in the "documents" folder that sits next to this file, then
+     point a link at it, e.g. documents/Your-File.pdf
+
+  5. PUBLISH IT
+     Upload this file plus the "documents" folder to any static host such as
+     GitHub Pages, Netlify, Cloudflare Pages, or Vercel.
+
+  Note: the fonts load from Google Fonts, so an internet connection is needed
+  the first time a visitor opens the page. Everything else works offline.
+  ============================================================================
+-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jannet Trabelsi — Engineering Physics · NV-Center Quantum Sensing</title>
+  <meta name="description" content="Jannet Trabelsi — engineering physics undergraduate at the University of Pittsburgh and research assistant in the Dutt Lab, developing instrumentation and control software for NV-center quantum sensing. Applying to physics PhD programs for Fall 2027.">
+  <meta name="author" content="Jannet Trabelsi">
+
+  <!-- Little downward-dip favicon (echoes the ODMR measurement) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23161a1d'/%3E%3Cpath d='M4 10 C10 10 11 22 16 22 C21 22 22 10 28 10' fill='none' stroke='%231d5fb2' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <!-- Typefaces: Space Grotesk (display) + IBM Plex Sans (text) + IBM Plex Mono (data) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================================
+       THEME  —  edit these to re-skin the whole site
+       ======================================================================== */
+    :root{
+      /* --- palette: a cool "measurement canvas", not warm cream --- */
+      --canvas:   #eef1f2;   /* page background                              */
+      --panel:    #f5f7f8;   /* plot area / featured panel (lighter)         */
+      --panel-2:  #e6eaec;   /* alternating section wash                     */
+      --ink:      #161a1d;   /* primary text (a cool near-black)             */
+      --ink-2:    #59636a;   /* secondary text, labels                       */
+      --ink-3:    #98a1a6;   /* faint text, gridline numbers                 */
+      --line:     #d5dbde;   /* hairlines / gridlines                        */
+      --line-2:   #c1cacd;   /* stronger lines / axes                        */
+      --nv:       #1d5fb2;   /* primary accent — a technical instrument blue */
+      --nv-deep:  #123f7a;   /* darker blue for buttons, links, and labels   */
+      --trace:    #586169;   /* measured data points — neutral slate         */
+
+      /* --- type --- */
+      --sans:    'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --display: 'Space Grotesk', var(--sans);
+      --mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      /* --- layout --- */
+      --maxw: 1120px;
+      --pad-x: clamp(20px, 5vw, 44px);
+      --sec-y: clamp(72px, 11vw, 148px);
+    }
+
+    /* ========================================================================
+       BASE
+       ======================================================================== */
+    *{ box-sizing: border-box; }
+    html{ -webkit-text-size-adjust:100%; scroll-behavior: auto; }
+    body{
+      margin:0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: clamp(16.5px, 0.5vw + 15px, 18px);
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      /* faint plotting grid — barely there, adds a measurement texture */
+      background-image:
+        linear-gradient(to right, rgba(22,26,29,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22,26,29,.035) 1px, transparent 1px);
+      background-size: 46px 46px;
+      background-position: -1px -1px;
+    }
+    @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+    h1,h2,h3{ font-family: var(--display); font-weight:600; letter-spacing:-0.015em; line-height:1.06; margin:0; }
+    p{ margin:0; }
+    a{ color: var(--ink); text-decoration:none; }
+    ::selection{ background: var(--nv); color:#fff; }
+
+    .wrap{ max-width: var(--maxw); margin-inline:auto; padding-inline: var(--pad-x); }
+
+    /* keyboard focus — visible and on-brand */
+    a:focus-visible, button:focus-visible{
+      outline: 2px solid var(--nv);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* skip link */
+    .skip{ position:absolute; left:-9999px; top:0; background:var(--ink); color:#fff; padding:10px 14px; z-index:100; }
+    .skip:focus{ left:12px; top:12px; }
+
+    /* ========================================================================
+       HEADER / NAV
+       ======================================================================== */
+    .site-head{
+      position: sticky; top:0; z-index:50;
+      background: rgba(238,241,242,.9);
+      background: color-mix(in srgb, var(--canvas) 86%, transparent);
+      backdrop-filter: saturate(1.1) blur(8px);
+      -webkit-backdrop-filter: saturate(1.1) blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .head-row{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+    .brand{ font-family: var(--display); font-weight:700; font-size:1.06rem; letter-spacing:-0.01em; }
+    .brand .dot{ color: var(--nv); }
+    #site-nav{ display:flex; align-items:center; gap: clamp(16px, 2.4vw, 30px); }
+    #site-nav a{ font-size:.94rem; color: var(--ink-2); position:relative; padding:4px 0; }
+    #site-nav a:hover{ color: var(--ink); }
+    #site-nav a::after{
+      content:""; position:absolute; left:0; right:100%; bottom:0; height:1.5px;
+      background: var(--nv); transition: right .28s ease;
+    }
+    #site-nav a:hover::after{ right:0; }
+    .nav-toggle{ display:none; }
+
+    @media (max-width: 760px){
+      .nav-toggle{
+        display:inline-flex; align-items:center; gap:8px;
+        background:none; border:1px solid var(--line-2); color:var(--ink);
+        font-family:var(--sans); font-size:.9rem; padding:8px 12px; border-radius:5px; cursor:pointer;
+      }
+      #site-nav{
+        position:absolute; top:60px; left:0; right:0;
+        flex-direction:column; align-items:flex-start; gap:2px;
+        background: var(--canvas); border-bottom:1px solid var(--line);
+        padding: 8px var(--pad-x) 18px;
+        display:none;
+      }
+      #site-nav.open{ display:flex; }
+      #site-nav a{ font-size:1.05rem; padding:9px 0; width:100%; }
+      #site-nav a::after{ display:none; }
+    }
+
+    /* ========================================================================
+       HERO
+       ======================================================================== */
+    .hero{ padding-top: clamp(46px, 7vw, 92px); padding-bottom: var(--sec-y); }
+    .hero-grid{ display:grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(30px, 5vw, 70px); align-items:center; }
+    .kicker{
+      font-size:.86rem; color: var(--nv-deep); font-weight:500;
+      display:inline-flex; align-items:center; gap:9px; margin-bottom:20px;
+    }
+    .kicker::before{ content:""; width:26px; height:1.5px; background: var(--nv); display:inline-block; }
+    .hero h1{ font-size: clamp(2.35rem, 5.4vw, 4.05rem); letter-spacing:-0.028em; color: var(--nv-deep); }
+    .hero h1 em{ font-style: normal; color: inherit; }
+    .hero-lead{ margin-top:22px; font-size: clamp(1.04rem, 1.4vw, 1.2rem); color: var(--ink-2); max-width: 46ch; }
+
+    /* buttons */
+    .actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:36px; }
+    .btn{
+      font-family: var(--sans); font-size:.96rem; font-weight:500;
+      padding:12px 20px; border-radius:5px; cursor:pointer; border:1px solid transparent;
+      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn-primary{ background: var(--nv-deep); color:#fff; }
+    .btn-primary:hover{ background: #0e3363; }
+    .btn-ghost{ background: transparent; color: var(--ink); border-color: var(--line-2); }
+    .btn-ghost:hover{ border-color: var(--ink); }
+
+    /* plot figure */
+    .figure{ margin:0; }
+    .plot{ width:100%; height:auto; display:block;
+      border:1px solid var(--line-2); border-radius:8px; background: var(--panel);
+    }
+    .plot .frame{ fill: var(--panel); stroke: var(--line-2); stroke-width:1; }
+    .plot .grid line{ stroke: var(--line); stroke-width:1; }
+    .plot .dmark{ stroke: var(--ink-3); stroke-width:1; stroke-dasharray:2 4; }
+    .plot .ax-num{ font-family: var(--mono); font-size:11px; fill: var(--ink-2); }
+    .plot .ax-title{ font-family: var(--sans); font-size:12px; fill: var(--ink-2); }
+    .plot .dlabel{ font-family: var(--mono); font-size:10.5px; fill: var(--ink-3); }
+    .plot .data circle{ fill: var(--trace); fill-opacity:.72; }
+    .plot .fit{ fill:none; stroke: var(--nv); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;
+      transition: stroke-dashoffset 1.7s cubic-bezier(.4,0,.15,1) .2s; }
+    .figcap{ margin-top:12px; font-size:.92rem; color: var(--ink-2); max-width:52ch; }
+    .figcap b{ color: var(--ink); font-weight:600; }
+
+    /* hero draw-in (one orchestrated moment; skipped for reduced-motion) */
+    .plot.animate-in .grid line{ opacity:0; }
+    .plot.animate-in .data circle{ opacity:0; }
+    .plot.animate-in.play .grid line{ opacity:1; transition: opacity .5s ease; }
+    .plot.animate-in.play .data circle{ opacity:1; transition: opacity .55s ease .9s; }
+
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .figure{ order:2; }
+    }
+
+    /* ========================================================================
+       SECTION SCAFFOLD
+       ======================================================================== */
+    section{ scroll-margin-top:78px; }
+    .band{ background: var(--panel-2); border-block:2px solid var(--line); }
+    .sec{ padding-block: var(--sec-y); }
+    .sec-head{ max-width: 60ch; margin-bottom: clamp(34px, 5vw, 56px); }
+    .sec-head h2{ font-size: clamp(1.55rem, 3.2vw, 2.2rem); }
+    #about h2, #toolkit h2, #recognition h2{ color: var(--nv-deep); }
+    .sec-head p{ margin-top:14px; color: var(--ink-2); }
+    .idx{ font-family: var(--mono); font-size:.8rem; color: var(--nv-deep); }
+
+    /* ========================================================================
+       WORK
+       ======================================================================== */
+    /* featured */
+    .featured{
+      display:grid; grid-template-columns: 1.15fr .85fr; gap: clamp(26px, 4vw, 52px);
+      align-items:center;
+      border:1px solid var(--line-2); border-radius:10px; background: var(--panel);
+      padding: clamp(24px, 3.5vw, 44px);
+      margin-bottom: clamp(30px, 4vw, 44px);
+    }
+    .tag-featured{
+      display:inline-block; font-size:.76rem; color: var(--nv-deep);
+      border:1px solid #a9c2e0;
+      border:1px solid color-mix(in srgb, var(--nv) 40%, var(--line-2));
+      border-radius: 999px; padding:3px 11px; margin-bottom:16px;
+    }
+    .featured h3{ font-size: clamp(1.3rem, 2.2vw, 1.7rem); }
+    .featured .role{ color: var(--ink-2); font-size:.9rem; margin-top:6px; }
+    .featured p.desc{ margin-top:16px; color: var(--ink); }
+    .seq{ width:100%; height:auto; }
+    .seq .seq-lane{ font-family: var(--mono); font-size:11px; fill: var(--ink-2); }
+    .seq .seq-cap{ font-family: var(--sans); font-size:10.5px; fill: var(--ink-3); }
+    .seq .seq-pi{ font-family: var(--mono); font-size:12px; fill: var(--nv-deep); }
+    .seq .seq-line{ fill:none; stroke: var(--ink); stroke-width:1.9; stroke-linejoin:round; }
+    .seq .seq-mw{ fill:none; stroke: var(--nv); stroke-width:2.2; stroke-linejoin:round; }
+    .seq .seq-win{ fill: var(--nv); fill-opacity:0.07; }
+
+    /* project list — an index rail + content, not identical cards */
+    .proj{
+      display:grid; grid-template-columns: 200px 1fr; gap: clamp(16px, 3vw, 44px);
+      padding-block: clamp(26px, 3.4vw, 38px);
+      border-top:2px solid var(--line);
+    }
+    .proj:last-child{ border-bottom:2px solid var(--line); }
+    .proj .rail{ color: var(--ink-2); }
+    .proj .rail .domain{ font-size:.9rem; color: var(--ink); font-weight:500; }
+    .proj .rail .year{ font-family: var(--mono); font-size:.8rem; color: var(--ink-2); margin-top:4px; }
+    .proj h3{ font-size: clamp(1.14rem, 1.8vw, 1.4rem); }
+    .proj p.desc{ margin-top:11px; color: var(--ink-2); max-width: 64ch; }
+    .tags{ display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+    .tags span{
+      font-size:.76rem; color: var(--ink-2);
+      border:1px solid var(--line-2); border-radius:4px; padding:3px 9px; background: var(--canvas);
+    }
+    .read{
+      display:inline-block; margin-top:16px; font-size:.9rem; font-weight:500; color: var(--nv-deep);
+      border-bottom:1.5px solid rgba(29,95,178,.5);
+      border-bottom:1.5px solid color-mix(in srgb, var(--nv) 45%, transparent); padding-bottom:2px;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .read:hover{ color: var(--nv); border-color: var(--nv); }
+
+    /* figures / photographs from the lab */
+    .shot{ margin:0; }
+    .shot img{ display:block; width:100%; height:auto;
+      border:1px solid var(--line-2); border-radius:8px; background: var(--panel); }
+    .shot video{ display:block; width:100%; height:auto;
+      border:1px solid var(--line-2); border-radius:8px; background:#0b0d0e; }
+    .shot figcaption{ margin-top:10px; font-size:.9rem; color: var(--ink-2); max-width:62ch; }
+    .proj .shot{ margin-top:22px; }
+    .shot.shot-sm{ max-width:440px; }          /* keep lower-res screenshots crisp */
+    .shot-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px; align-items:start; }
+    /* featured right column: framed pulse diagram + measured spectrum, stacked */
+    .seq-wrap{ display:grid; gap:22px; align-content:start; }
+    .shot-seq{ border:1px solid var(--line-2); border-radius:8px; background: var(--panel); padding:16px; }
+    .shot-seq svg{ display:block; width:100%; height:auto; }
+    .shot-seq figcaption{ margin-top:12px; font-size:.9rem; color: var(--ink-2); }
+    /* full-width lab-bench banner between hero and work */
+    .setup-band{ padding-top: clamp(8px,1.6vw,20px); padding-bottom: clamp(18px,3vw,34px); }
+    .shot-wide img{ aspect-ratio: 16 / 7; object-fit: cover; }
+
+    @media (max-width: 720px){
+      .featured{ grid-template-columns:1fr; }
+      .featured .seq-wrap{ order:2; }
+      .proj{ grid-template-columns:1fr; gap:10px; }
+      .proj .rail{ display:flex; align-items:baseline; gap:12px; }
+      .proj .rail .year{ margin-top:0; }
+    }
+    @media (max-width: 640px){
+      .shot-row{ grid-template-columns:1fr; }
+      .shot-wide img{ aspect-ratio: 4 / 3; }
+    }
+
+    /* ========================================================================
+       ABOUT
+       ======================================================================== */
+    .about-grid{ display:grid; grid-template-columns: 1.35fr .65fr; gap: clamp(30px, 5vw, 68px); }
+    .bio p + p{ margin-top:16px; }
+    .bio p{ color: var(--ink); }
+    .facts{ border-left:2px solid var(--nv); padding-left: clamp(18px,2.4vw,26px); }
+    .facts dl{ margin:0; }
+    .facts dt{ font-size:.78rem; color: var(--ink-2); }
+    .facts dd{ margin:2px 0 18px; font-size:.96rem; }
+    .facts dd:last-child{ margin-bottom:0; }
+    @media (max-width: 820px){ .about-grid{ grid-template-columns:1fr; } }
+
+    /* ========================================================================
+       TOOLKIT
+       ======================================================================== */
+    .kit{ display:grid; grid-template-columns: repeat(2, 1fr); gap: clamp(26px, 3.6vw, 44px) clamp(30px,5vw,64px); }
+    .kit-group h3{ font-family: var(--sans); font-size:.82rem; font-weight:600; color: var(--ink-2); margin-bottom:12px; }
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span{
+      font-size:.86rem; color: var(--ink);
+      border:1px solid var(--line-2); border-radius:5px; padding:6px 11px; background: var(--canvas);
+    }
+    @media (max-width: 720px){ .kit{ grid-template-columns:1fr; } }
+
+    /* ========================================================================
+       RECOGNITION
+       ======================================================================== */
+    .manu{
+      border:1px solid var(--line-2); border-radius:10px; background: var(--panel);
+      padding: clamp(22px,3vw,32px); margin-bottom: clamp(30px,4vw,42px);
+      display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;
+    }
+    .manu .mark{ font-family: var(--mono); font-size:.8rem; color: var(--nv-deep); white-space:nowrap; }
+    .manu h3{ font-family: var(--display); font-size: clamp(1.12rem,1.8vw,1.35rem); }
+    .manu p{ margin-top:8px; color: var(--ink-2); max-width:62ch; }
+    .honors{ list-style:none; margin:0; padding:0; }
+    .honors li{
+      display:flex; justify-content:space-between; gap:18px; align-items:baseline;
+      padding-block: 15px; border-top:1px solid var(--line);
+    }
+    .honors li:last-child{ border-bottom:1px solid var(--line); }
+    .honors .h-name{ font-size:1rem; }
+    .honors .h-date{ font-family: var(--mono); font-size:.82rem; color: var(--ink-2); white-space:nowrap; }
+
+    /* ========================================================================
+       PROJECT MEDIA GRID
+       ======================================================================== */
+    .shot-grid{ column-width: 360px; column-gap: 14px; margin-top:22px; }
+    .shot-grid .shot{ break-inside: avoid; margin:0 0 14px; }
+    .shot img{ cursor: zoom-in; transition: border-color .18s ease; }
+    .shot img:hover{ border-color: var(--ink-3); }
+
+    /* lightbox */
+    .lightbox{ position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center;
+      background: rgba(12,14,16,.93); padding: clamp(16px,4vw,52px); }
+    .lightbox.open{ display:flex; }
+    .lightbox img{ max-width:100%; max-height:82vh; border-radius:8px; box-shadow:0 12px 44px rgba(0,0,0,.55); }
+    .lightbox figcaption{ position:absolute; left:0; right:0; bottom: max(16px,3vw); text-align:center;
+      color:#e9edf0; font-size:.9rem; padding:0 24px; }
+    .lb-close{ position:absolute; top:16px; right:18px; width:42px; height:42px; border-radius:50%;
+      border:1px solid rgba(255,255,255,.35); background:rgba(0,0,0,.35); color:#fff; font-size:1.5rem;
+      line-height:1; cursor:pointer; }
+    .lb-close:hover{ background:rgba(255,255,255,.16); }
+
+    /* ========================================================================
+       CONTACT / FOOTER
+       ======================================================================== */
+    .contact .wrap{ max-width: 860px; }
+    .contact h2{ font-size: clamp(1.9rem, 4vw, 3rem); letter-spacing:-0.02em; }
+    .contact p.invite{ margin-top:18px; color: var(--ink-2); font-size:1.08rem; max-width:52ch; }
+    .cmail{
+      display:inline-block; margin-top:26px; font-family: var(--display); font-weight:600;
+      font-size: clamp(1.3rem, 3vw, 2rem); color: var(--ink);
+      border-bottom:2px solid var(--nv); padding-bottom:4px;
+    }
+    .cmail:hover{ color: var(--nv); }
+    .cmeta{ display:flex; flex-wrap:wrap; gap:8px 26px; margin-top:24px; color: var(--ink-2); font-size:.94rem; }
+    .cmeta a:hover{ color: var(--ink); }
+
+    footer{ border-top:1px solid var(--line); background: var(--panel-2); }
+    .foot-row{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; padding-block:26px; font-size:.82rem; color: var(--ink-2); }
+    .foot-row .colophon b{ color: var(--ink); font-weight:600; }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#work">Skip to work</a>
+
+  <!-- ===== HEADER / NAV ===== -->
+  <header class="site-head">
+    <div class="wrap head-row">
+      <a class="brand" href="#top">Jannet Trabelsi<span class="dot">.</span></a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#recognition">Recognition</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============================================================== -->
+    <!-- ===== HERO  (edit your headline + intro here) ===== -->
+    <!-- ============================================================== -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <span class="kicker">Engineering Physics · University of Pittsburgh</span>
+          <h1>Experimental Quantum Sensing with Nitrogen-Vacancy Centers in Diamond.</h1>
+          <p class="hero-lead">
+            I am an engineering physics undergraduate at the University of Pittsburgh, where I build and run an
+            NV-center magnetometry experiment in the Dutt Lab. I designed and built the setup — the optics, 
+            instrumentation, and control software behind pulsed and continuous-wave ODMR, confocal microscopy, 
+            and coherent spin control. I am applying to physics PhD programs for Fall 2027.
+          </p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="#work">View selected work</a>
+            <a class="btn btn-ghost" href="documents/Jannet-Trabelsi-CV.pdf" target="_blank" rel="noopener">Curriculum vitae (PDF)</a>
+          </div>
+        </div>
+
+        <!-- Bespoke hero: a magnetic-field-split ODMR spectrum, the signature
+             measurement of NV-center work. Coordinates were computed from a
+             two-Lorentzian model about the 2.87 GHz zero-field splitting. -->
+        <figure class="figure">
+          <svg class="plot" viewBox="0 0 560 420" role="img"
+               aria-label="An optically detected magnetic resonance spectrum: NV-center fluorescence dips near 2.87 gigahertz, split into two resonances by an applied magnetic field, with data points scattered around a fitted curve.">
+            <rect class="frame" x="66" y="26" width="472" height="340"/>
+
+            <g class="grid">
+              <line x1="144.7" y1="26" x2="144.7" y2="366"/>
+              <line x1="223.3" y1="26" x2="223.3" y2="366"/>
+              <line x1="302.0" y1="26" x2="302.0" y2="366"/>
+              <line x1="380.7" y1="26" x2="380.7" y2="366"/>
+              <line x1="459.3" y1="26" x2="459.3" y2="366"/>
+              <line x1="66" y1="338.8" x2="538" y2="338.8"/>
+              <line x1="66" y1="270.8" x2="538" y2="270.8"/>
+              <line x1="66" y1="202.8" x2="538" y2="202.8"/>
+              <line x1="66" y1="134.8" x2="538" y2="134.8"/>
+              <line x1="66" y1="66.8" x2="538" y2="66.8"/>
+            </g>
+
+            <line class="dmark" x1="302.0" y1="26" x2="302.0" y2="366"/>
+
+            <g class="axis">
+              <text class="ax-num" x="144.7" y="384.0" text-anchor="middle">2.85</text>
+              <text class="ax-num" x="302.0" y="384.0" text-anchor="middle">2.87</text>
+              <text class="ax-num" x="459.3" y="384.0" text-anchor="middle">2.89</text>
+              <text class="ax-num" x="56.0" y="342.3" text-anchor="end">0.80</text>
+              <text class="ax-num" x="56.0" y="206.3" text-anchor="end">0.90</text>
+              <text class="ax-num" x="56.0" y="70.3" text-anchor="end">1.00</text>
+              <text class="ax-title" x="302" y="406" text-anchor="middle">microwave frequency (GHz)</text>
+              <text class="ax-title" x="20" y="196" text-anchor="middle" transform="rotate(-90 20 196)">fluorescence (norm.)</text>
+              <text class="dlabel" x="306" y="40" text-anchor="start">D = 2.87 GHz</text>
+            </g>
+
+            <g class="data">
+              <circle cx="71.4" cy="81.9" r="2.4"/><circle cx="82.1" cy="72.0" r="2.4"/><circle cx="92.8" cy="85.0" r="2.4"/>
+              <circle cx="103.5" cy="88.9" r="2.4"/><circle cx="114.3" cy="101.4" r="2.4"/><circle cx="125.0" cy="94.9" r="2.4"/>
+              <circle cx="135.7" cy="80.9" r="2.4"/><circle cx="146.5" cy="99.3" r="2.4"/><circle cx="157.2" cy="101.7" r="2.4"/>
+              <circle cx="167.9" cy="130.7" r="2.4"/><circle cx="178.6" cy="154.5" r="2.4"/><circle cx="189.4" cy="196.3" r="2.4"/>
+              <circle cx="200.1" cy="274.7" r="2.4"/><circle cx="210.8" cy="279.3" r="2.4"/><circle cx="221.5" cy="281.7" r="2.4"/>
+              <circle cx="232.3" cy="237.8" r="2.4"/><circle cx="243.0" cy="222.6" r="2.4"/><circle cx="253.7" cy="188.5" r="2.4"/>
+              <circle cx="264.5" cy="153.3" r="2.4"/><circle cx="275.2" cy="133.4" r="2.4"/><circle cx="285.9" cy="114.0" r="2.4"/>
+              <circle cx="296.6" cy="115.8" r="2.4"/><circle cx="307.4" cy="107.3" r="2.4"/><circle cx="318.1" cy="128.2" r="2.4"/>
+              <circle cx="328.8" cy="121.7" r="2.4"/><circle cx="339.5" cy="134.1" r="2.4"/><circle cx="350.3" cy="172.3" r="2.4"/>
+              <circle cx="361.0" cy="171.6" r="2.4"/><circle cx="371.7" cy="236.9" r="2.4"/><circle cx="382.5" cy="271.4" r="2.4"/>
+              <circle cx="393.2" cy="301.4" r="2.4"/><circle cx="403.9" cy="260.8" r="2.4"/><circle cx="414.6" cy="204.2" r="2.4"/>
+              <circle cx="425.4" cy="162.0" r="2.4"/><circle cx="436.1" cy="124.9" r="2.4"/><circle cx="446.8" cy="113.5" r="2.4"/>
+              <circle cx="457.5" cy="112.3" r="2.4"/><circle cx="468.3" cy="111.9" r="2.4"/><circle cx="479.0" cy="99.5" r="2.4"/>
+              <circle cx="489.7" cy="69.2" r="2.4"/><circle cx="500.5" cy="96.3" r="2.4"/><circle cx="511.2" cy="78.0" r="2.4"/>
+              <circle cx="521.9" cy="73.3" r="2.4"/><circle cx="532.6" cy="100.3" r="2.4"/>
+            </g>
+
+            <path id="odmrFit" class="fit" d="M 66.0 77.3 L 68.6 77.7 L 71.2 78.0 L 73.9 78.4 L 76.5 78.8 L 79.1 79.2 L 81.7 79.6 L 84.4 80.0 L 87.0 80.5 L 89.6 81.0 L 92.2 81.5 L 94.8 82.1 L 97.5 82.7 L 100.1 83.3 L 102.7 84.0 L 105.3 84.7 L 108.0 85.4 L 110.6 86.2 L 113.2 87.1 L 115.8 88.0 L 118.4 89.0 L 121.1 90.0 L 123.7 91.1 L 126.3 92.4 L 128.9 93.7 L 131.6 95.1 L 134.2 96.6 L 136.8 98.2 L 139.4 100.0 L 142.0 102.0 L 144.7 104.1 L 147.3 106.4 L 149.9 108.9 L 152.5 111.7 L 155.2 114.7 L 157.8 118.0 L 160.4 121.7 L 163.0 125.7 L 165.6 130.2 L 168.3 135.1 L 170.9 140.6 L 173.5 146.6 L 176.1 153.3 L 178.8 160.7 L 181.4 168.9 L 184.0 177.9 L 186.6 187.8 L 189.2 198.6 L 191.9 210.1 L 194.5 222.4 L 197.1 235.1 L 199.7 248.0 L 202.4 260.6 L 205.0 272.4 L 207.6 282.6 L 210.2 290.6 L 212.8 295.8 L 215.5 297.7 L 218.1 296.2 L 220.7 291.4 L 223.3 283.8 L 226.0 273.9 L 228.6 262.6 L 231.2 250.3 L 233.8 237.8 L 236.4 225.5 L 239.1 213.7 L 241.7 202.5 L 244.3 192.2 L 246.9 182.8 L 249.6 174.3 L 252.2 166.6 L 254.8 159.6 L 257.4 153.4 L 260.0 147.9 L 262.7 143.0 L 265.3 138.7 L 267.9 134.8 L 270.5 131.4 L 273.2 128.4 L 275.8 125.8 L 278.4 123.5 L 281.0 121.5 L 283.6 119.8 L 286.3 118.4 L 288.9 117.2 L 291.5 116.3 L 294.1 115.6 L 296.8 115.1 L 299.4 114.8 L 302.0 114.6 L 304.6 114.8 L 307.2 115.1 L 309.9 115.6 L 312.5 116.3 L 315.1 117.2 L 317.7 118.4 L 320.4 119.8 L 323.0 121.5 L 325.6 123.5 L 328.2 125.8 L 330.8 128.4 L 333.5 131.4 L 336.1 134.8 L 338.7 138.7 L 341.3 143.0 L 344.0 147.9 L 346.6 153.4 L 349.2 159.6 L 351.8 166.6 L 354.4 174.3 L 357.1 182.8 L 359.7 192.2 L 362.3 202.5 L 364.9 213.7 L 367.6 225.5 L 370.2 237.8 L 372.8 250.3 L 375.4 262.6 L 378.0 273.9 L 380.7 283.8 L 383.3 291.4 L 385.9 296.2 L 388.5 297.7 L 391.2 295.8 L 393.8 290.6 L 396.4 282.6 L 399.0 272.4 L 401.6 260.6 L 404.3 248.0 L 406.9 235.1 L 409.5 222.4 L 412.1 210.1 L 414.8 198.6 L 417.4 187.8 L 420.0 177.9 L 422.6 168.9 L 425.2 160.7 L 427.9 153.3 L 430.5 146.6 L 433.1 140.6 L 435.7 135.1 L 438.4 130.2 L 441.0 125.7 L 443.6 121.7 L 446.2 118.0 L 448.8 114.7 L 451.5 111.7 L 454.1 108.9 L 456.7 106.4 L 459.3 104.1 L 462.0 102.0 L 464.6 100.0 L 467.2 98.2 L 469.8 96.6 L 472.4 95.1 L 475.1 93.7 L 477.7 92.4 L 480.3 91.1 L 482.9 90.0 L 485.6 89.0 L 488.2 88.0 L 490.8 87.1 L 493.4 86.2 L 496.0 85.4 L 498.7 84.7 L 501.3 84.0 L 503.9 83.3 L 506.5 82.7 L 509.2 82.1 L 511.8 81.5 L 514.4 81.0 L 517.0 80.5 L 519.6 80.0 L 522.3 79.6 L 524.9 79.2 L 527.5 78.8 L 530.1 78.4 L 532.8 78.0 L 535.4 77.7 L 538.0 77.3"/>
+          </svg>
+          <figcaption class="figcap">
+            <b>Optically detected magnetic resonance (ODMR).</b> NV-center fluorescence shows two spin
+            resonances split about the 2.87&nbsp;GHz zero-field splitting <i>D</i> by an applied static
+            field. The Zeeman splitting is proportional to the magnetic field projected onto the NV
+            symmetry axis.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- ===== WORK  (resume items; each with description + media) ===== -->
+    <!-- ============================================================== -->
+    <section id="work" class="band">
+      <div class="wrap sec">
+        <div class="sec-head">
+          <h2>Research &amp; projects</h2>
+          <p>Quantum Sensing, Quantum Optics, Quantum Measurements, Instrumentation, and Control Software and Hardware from the Dutt Lab. Highlights of optics and engineering coursework at Pitt.</p>
+        </div>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Single NV Quantum Sensing Experimental Setup</div><div class="year">2024 – present</div></div>
+          <div>
+            <h3>Single NV Quantum Sensing Experimental Setup</h3>
+            <p class="desc">
+              Single NV Quantum Sensing — Green, Red, IR, and Orange laser excitation, microwave delivery, and single-photon detection, arranged for confocal imaging and ODMR of NV centers in diamond.
+            </p>
+            <div class="tags"><span>optical bench</span><span>confocal + ODMR</span><span>microwave delivery</span><span>single-photon detection</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/setup.jpg" alt="The Single NV confocal and ODMR table in the Dutt Lab." loading="lazy">
+                <figcaption>The NV-center confocal and ODMR table in the Dutt Lab.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g01.jpg" alt="Working at the optical bench." loading="lazy">
+                <figcaption>Working at the optical bench.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g05.jpg" alt="Top View of Optical Setup" loading="lazy">
+                <figcaption>Top View of Optical Setup</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g06.jpg" alt="Optical Setup" loading="lazy">
+                <figcaption>Optical Setup.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g07.jpg" alt="Microscope Objective for laser delivery and PL collection over a mounted diamond sample." loading="lazy">
+                <figcaption>Microscope Objective for laser delivery and PL collection over a mounted diamond sample.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/instrument-rack.jpg" alt="The instrument rack." loading="lazy">
+                <figcaption>The instrument rack.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g08.jpg" alt="White-light imaging option." loading="lazy">
+                <figcaption>White-light imaging option.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- FEATURED PROJECT -->
+        <article class="featured">
+          <div>
+            <span class="tag-featured">Featured project</span>
+            <h3>Pulsed &amp; CW ODMR Control System</h3>
+            <p class="role">Dutt Lab · Quantum Control, Timing Electronics, Inter-Instrument Triggering, Acousto-Optic Modulators, Data Acquisition</p>
+            <p class="desc">
+              A Python pulse-sequencing and calibration stack for NV-center magnetic resonance,
+              reaching <b>0.8&nbsp;ns</b> timing resolution across laser and microwave channels. I
+              architected a state-machine ADbasic program for T<sub>1</sub>, Rabi, Ramsey, and
+              Hahn-echo measurements. The architecture runs on inter-instrument triggering between the AWG and photon counter: AOMs modulate the lasers and an IQ mixer modulates the microwave, both driven by a Proteus AWG. I use the MultiHarp for offline gating of the signal and reference counts, which improves SNR.
+            </p>
+            <div class="tags">
+              <span>Python</span><span>ADbasic</span><span>Proteus AWG</span><span>SG384</span>
+              <span>MultiHarp</span><span>IQ calibration</span><span>NV Centers</span>
+            </div>
+          </div>
+          <!-- hand-drawn pulse sequence: initialize -> pi pulse -> read out -->
+          <div class="seq-wrap">
+            <figure class="shot shot-seq">
+              <svg class="seq" viewBox="0 0 360 160" role="img"
+                   aria-label="A pulse-sequence timing diagram with three channels: a laser pulse to initialize the spin, a microwave pi/2, pi, then pi/2 pulse sequence, then a second laser pulse read out through a gated photon counter.">
+                <text class="seq-lane" x="60" y="42" text-anchor="end">laser</text>
+                <text class="seq-lane" x="60" y="88" text-anchor="end">MW</text>
+                <text class="seq-lane" x="60" y="134" text-anchor="end">counter</text>
+                <text class="seq-cap" x="111" y="16" text-anchor="middle">initialize</text>
+                <text class="seq-pi" x="165" y="60" text-anchor="middle" font-size="3">&#960;/2</text>
+                <text class="seq-pi" x="200" y="60" text-anchor="middle" font-size="3">&#960;</text>
+                <text class="seq-pi" x="235" y="60" text-anchor="middle" font-size="3">&#960;/2</text>
+                <text class="seq-cap" x="285" y="16" text-anchor="middle">read out</text>
+                <polyline class="seq-line" points="72,23 150,23 150,53 250,53 250,23 318,23 318,53 340,53"/>
+                <polyline class="seq-mw" points="72,95 158,95 158,65 172,65 172,95 186,95 186,65 214,65 214,95 228,95 228,65 242,65 242,95 340,95"/>
+                <polyline class="seq-line" points="72,137 252,137 252,107 316,107 316,137 340,137"/>
+                <rect class="seq-win" x="252" y="107" width="64" height="30"/>
+              </svg>
+                <figcaption>Pulse sequence for a spin-echo (Hahn echo) measurement: optical initialization, a resonant &#960;/2&ndash;&#960;&ndash;&#960;/2 microwave sequence, and gated photon-counting readout.</figcaption>
+              </figure>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Timing Electronics</div><div class="year">2025 – present</div></div>
+          <div>
+            <h3>Multi-instrument Triggering for Pulsed ODMR</h3>
+            <p class="desc">
+              Bringing up and characterizing the multi-instrument triggering that pulsed ODMR depends on. I measured the trigger-to-output latency of a Proteus AWG driving an ADwin — 902 ns with 0.03 ns drift and 2.3 ns jitter, shot-noise limited — separated the fixed AOM acoustic delay from the true 29 ns optical rise, and aligned the readout gate to the optical pulse so the signal and reference windows sample the same light.
+            </p>
+            <div class="tags"><span>Proteus AWG</span><span>ADwin</span><span>trigger latency</span><span>AOM timing</span><span>gate alignment</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g17.jpg" alt="Laser AOM rise time — a fixed acoustic delay of about 887 ns, then a 29 ns optical rise (10–90%)." loading="lazy">
+                <figcaption>Laser AOM rise time — a fixed acoustic delay of about 887 ns, then a 29 ns optical rise (10–90%).</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g16.jpg" alt="Proteus–ADwin trigger-to-output latency: 902 ns, 0.03 ns drift, 2.3 ns jitter." loading="lazy">
+                <figcaption>Proteus–ADwin trigger-to-output latency: 902 ns, 0.03 ns drift, 2.3 ns jitter.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g18.jpg" alt="Signal vs reference gate counts — aligning the readout gate to the optical pulse." loading="lazy">
+                <figcaption>Signal vs reference gate counts — aligning the readout gate to the optical pulse.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Optics &amp; Software</div><div class="year">2024 – present</div></div>
+          <div>
+            <h3>Confocal Microscopy &amp; NV Localization</h3>
+            <p class="desc">
+              A Python suite that automates and optimizes NV-center photon collection in a confocal microscope, with a modular GUI for sample positioning and reproducible scans. I added an automated EMCCD camera scan with a microdrive and autotune, then brought up wide-field white-light imaging that captures the full frame in a single exposure — instead of stepping point-by-point across roughly 810,000 positions.
+            </p>
+            <div class="tags"><span>Confocal Microscopy</span><span>EMCCD</span><span>wide-field imaging</span><span>NV localization</span><span>Python GUI</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/confocal-scan.jpg" alt="A confocal scan of the diamond — NV centers appear as bright spots; color encodes photon-count rate." loading="lazy">
+                <figcaption>A confocal scan of bulk diamond — NV centers appear as bright spots; color encodes photon-count rate.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g52.jpg" alt="A single-NV confocal scan." loading="lazy">
+                <figcaption>A single-NV confocal scan in bulk diamond.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g47.jpg" alt="Nanodiamonds vs. wide-field imaging with the EMCCD." loading="lazy">
+                <figcaption>Nanodiamonds confocal vs. wide-field imaging with the EMCCD.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g53.jpg" alt="Independent single NVs." loading="lazy">
+                <figcaption>Independent single NVs in bulk diamond near MW wire.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g49.jpg" alt="EMCCD image (nanodiamonds)." loading="lazy">
+                <figcaption>Nanodiamond NV EMCCD image.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g54.jpg" alt="A parameter-sweep experiment." loading="lazy">
+                <figcaption>A parameter-sweep experiment that automates runs over selected parameters.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g27.jpg" alt="The NV-finding and positioning GUI." loading="lazy">
+                <figcaption>NV-finding and Positioning GUI.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Quantum Sensing</div><div class="year">2025 – present</div></div>
+          <div>
+            <h3>Coherent Spin Control — ODMR, Rabi &amp; T<sub>1</sub></h3>
+            <p class="desc">
+              Coherent control of single NV electron spins: continuous-wave and pulsed ODMR to locate the spin resonance, Rabi driving to calibrate microwave pulses, and T<sub>1</sub> relaxation measurements. This line of work feeds a first-author manuscript on an adiabatic NV DEER experiment (in preparation).
+            </p>
+            <div class="tags"><span>CW &amp; pulsed ODMR</span><span>Rabi</span><span>T1 relaxation</span><span>DEER</span><span>single NV</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g12.jpg" alt="CW ODMR on a single NV, polarization-optimized for contrast." loading="lazy">
+                <figcaption>CW ODMR on a single NV in bulk diamond (with bias field), laser polarization-optimized for contrast.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g26.jpg" alt="A nanodiamond CW ODMR resonance with bias field." loading="lazy">
+                <figcaption>A nanodiamond CW ODMR resonance with bias field.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g55.jpg" alt="A nanodiamond CW ODMR resonance." loading="lazy">
+                <figcaption>A nanodiamond CW ODMR resonance.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g14.jpg" alt="Rabi oscillations (nanodiamonds)." loading="lazy">
+                <figcaption>Rabi oscillations (single NV in bulk diamond).</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g19.jpg" alt="T1 relaxation — raw data and fit." loading="lazy">
+                <figcaption>T1 relaxation — raw data and fit.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g20.jpg" alt="T1 relaxation, 6% contrast." loading="lazy">
+                <figcaption>T1 relaxation, 6% contrast.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Spectroscopy</div><div class="year">2025 – present</div></div>
+          <div>
+            <h3>Photoluminescence Spectroscopy</h3>
+            <p class="desc">
+              Characterizing NV emission by its light: photoluminescence spectra taken by routing my confocal setup into the lab spectrometer, plus wide-field EMCCD imaging and calibrated white-light references.
+            </p>
+            <div class="tags"><span>NV PL</span><span>lab spectrometer</span><span>wide-field EMCCD</span><span>calibration</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g51.jpg" alt="Nanodiamond NV PL — my confocal setup into the lab spectrometer (575 nm NV0 ZPL and 637 nm NV- ZPL)." loading="lazy">
+                <figcaption>Nanodiamond NV PL — my confocal setup into the lab spectrometer (575 nm NV0 ZPL and 637 nm NV- ZPL).</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g48.jpg" alt="EMCCD Wide-field PL of nanodiamonds." loading="lazy">
+                <figcaption>EMCCD Wide-field PL of nanodiamonds.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g50.jpg" alt="A white-light image of nanodiamonds." loading="lazy">
+                <figcaption>A calibrated white-light image of nanodiamonds.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g28.jpg" alt="The NV-positioning tab with a wide-field PL image." loading="lazy">
+                <figcaption>The NV-positioning tab with a wide-field PL image.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Quantum Optics</div><div class="year">2025</div></div>
+          <div>
+            <h3>Spin-Charge Conversion &amp; the Dye Laser</h3>
+            <p class="desc">
+              An alternative NV readout that beats ordinary fluorescence detection: it uses the excited-state intersystem-crossing dynamics to protect one spin state from an intense ionization pulse, leaving a spin-dependent charge distribution that a charge-selective pulse then reads out — for longer measurement times and lower readout noise. I aligned and tuned the dye ring-laser cavity, wrote the Python client for the spectrometer, wavemeter, and dye-laser wavelength-tuning server, and refurbished the dye and chiller circulators.
+            </p>
+            <div class="tags"><span>Dye ring laser</span><span>AOM</span><span>optical alignment</span><span>wavemeter</span><span>NV charge state</span></div>
+            <figure class="shot">
+              <video controls muted playsinline preload="metadata" poster="videos/dye-laser-poster.jpg"
+                     aria-label="The dye ring laser I aligned by hand — tuning the dye emission across the visible, from the green pump through yellow, orange, and red.">
+                <source src="videos/dye-laser.mp4" type="video/mp4">
+                Your browser can&rsquo;t play embedded video &mdash; the clip is at videos/dye-laser.mp4.
+              </video>
+              <figcaption>The dye ring laser I aligned by hand — tuning the dye emission across the visible, from the green pump through yellow, orange, and red.</figcaption>
+            </figure>
+            <div class="shot-row">
+              <figure class="shot">
+                <img src="images/gallery/g30.jpg" alt="The dye-laser AOM setup." loading="lazy">
+                <figcaption>The dye-laser AOM setup.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g29.jpg" alt="The dye-laser AOM." loading="lazy">
+                <figcaption>The dye-laser AOM.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Lab Software</div><div class="year">2024 – present</div></div>
+          <div>
+            <h3>Instrument Control &amp; Lab Software</h3>
+            <p class="desc">
+              A Python instrument-control suite built on FastAPI servers that lets any computer in the lab reach any piece of hardware — GPIB frequency counters, a USB camera wrapped through its DLL, a spectrum analyzer with live FFT, and micro-stage automation. Networking the devices made all instruments accessible to every lab computer and unified how the lab saves data. I also built the analysis GUI that reads the lab's HDF5 files for imaging, confocal, ODMR, Rabi, Ramsey, and Hahn-echo runs.
+            </p>
+            <div class="tags"><span>FastAPI</span><span>Python</span><span>GPIB / USB / LAN</span><span>HDF5</span><span>instrument GUIs</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g02.jpg" alt="The spectrum-analyzer control GUI." loading="lazy">
+                <figcaption>The Spectrum Analyzer Control GUI.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g03.jpg" alt="An experiment block diagram." loading="lazy">
+                <figcaption>Instruments Block Diagram.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g04.jpg" alt="The microwave / AWG signal-chain diagram." loading="lazy">
+                <figcaption>The Microwave / AWG Signal Chain Diagram.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g21.jpg" alt="An IQ-calibration sweep." loading="lazy">
+                <figcaption>IQ Calibration Sweep.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g25.jpg" alt="The pulse-sequence builder preview." loading="lazy">
+                <figcaption>The Pulse Sequence Builder Preview (example SCC sequence).</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">CAD &amp; Simulation</div><div class="year">2025</div></div>
+          <div>
+            <h3>Diamond Annealing Chamber &amp; CFD</h3>
+            <p class="desc">
+              Our annealing chamber that designed in SOLIDWORKS and validated with computational fluid dynamics and thermal simulations — including the water-cooling flow around a chamber wall held at 1200&nbsp;°C. I worked directly with the machinists to turn the model into a safely working piece of hardware.
+            </p>
+            <div class="tags"><span>SOLIDWORKS</span><span>CFD</span><span>thermal simulation</span><span>design for machining</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/annealing-chamber-photo.jpg" alt="The machined annealing chamber." loading="lazy">
+                <figcaption>The machined annealing chamber.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g37.jpg" alt="The chamber in SOLIDWORKS, sectioned." loading="lazy">
+                <figcaption>The chamber in SOLIDWORKS, sectioned.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g43.jpg" alt="The chamber with its heater (CAD)." loading="lazy">
+                <figcaption>The chamber cross section with visible temperature streamlines.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g42.jpg" alt="CFD of the water-cooling flow — streamlines." loading="lazy">
+                <figcaption>CFD of the water-cooling flow with visible velocity streamlines.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g36.jpg" alt="The annealing-station cart in SOLIDWORKS." loading="lazy">
+                <figcaption>The annealing-station cart in SOLIDWORKS.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Optomechanics</div><div class="year">2024</div></div>
+          <div>
+            <h3>Levitating-Diamond Setup Upgrades</h3>
+            <p class="desc">
+              I did two upgrades to a levitated-diamond experiment: a vacuum re-entrant flange, designed and statically simulated in SOLIDWORKS, that lets an ultra-high-vacuum window sit close enough for a higher-NA objective — improving imaging of levitated particles by about 43% — and an Arduino-based PID controller for thermal stabilization of the feedback-cooling laser.
+            </p>
+            <div class="tags"><span>UHV design</span><span>SOLIDWORKS static</span><span>Arduino PID</span><span>high-NA imaging</span></div>
+            <figure class="shot">
+              <img src="images/levitating-setup.jpg" alt="The levitated-diamond UHV setup — a re-entrant flange and a high-NA objective." loading="lazy">
+              <figcaption>The levitated-diamond UHV setup — a re-entrant flange and a high-NA objective.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Hardware &amp; PCB</div><div class="year">2026</div></div>
+          <div>
+            <h3>Analog / Digital AOM Driver</h3>
+            <p class="desc">
+              A tunable hybrid acousto-optic modulator driver that controls a laser through both a TTL switch (on/off) and a voltage-variable attenuator (amplitude), with pulse shaping from an arbitrary waveform generator. I salvaged the bulk components from a dead fixed-frequency driver, added variable VCO control so it works across crystals, rebuilt power distribution around step-up converters and a computer power supply, laid it out on a PCB, and verified it on a real beam with a photodiode. Built for ECE 1895 in a six-week design cycle.
+            </p>
+            <div class="tags"><span>Altium PCB</span><span>VCO / VVA</span><span>RF electronics</span><span>AWG control</span><span>photodiode test</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/aom-pcb.png" alt="The AOM-driver PCB I designed — power regulation, VCO, TTL switch, and VVA control on one board." loading="lazy">
+                <figcaption>The AOM-driver PCB I designed — power regulation, VCO, TTL switch, and VVA control on one board.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g44.jpg" alt="The AOM-driver PCB layout." loading="lazy">
+                <figcaption>The AOM-driver PCB layout.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g46.jpg" alt="The AOM-driver block diagram." loading="lazy">
+                <figcaption>The AOM-driver block diagram.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g45.jpg" alt="The assembled driver board" loading="lazy">
+                <figcaption>The assembled driver board</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Analog electronics</div><div class="year">2026</div></div>
+          <div>
+            <h3>Spectrometer Demonstration Toy</h3>
+            <p class="desc">
+              A benchtop grating spectrometer controlled entirely with 555 timers. One astable stage turns a potentiometer setting into the PWM pulse width that positions a servo-mounted diffraction grating to select wavelength; a second, light-dependent stage swings a servo shutter to protect the detector when the incident light gets too bright. I modeled both circuits in LTspice — servos as inductive loads — matched the simulated pulse widths to oscilloscope measurements on the breadboard, then took the design through an Altium schematic, a two-layer PCB, and 3D-printed laser and grating mounts to fix the optical alignment. An individual project for ECE 1895.
+            </p>
+            <div class="tags"><span>555 timer</span><span>LTspice</span><span>servo / PWM</span><span>Altium PCB</span><span>optomechanics</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/spectrometer-setup.jpg" alt="The assembled spectrometer — servo-mounted grating, driver board, and laser." loading="lazy">
+                <figcaption>The assembled spectrometer — servo-mounted grating, driver board, and laser.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/spectrometer-ltspice.png" alt="The two 555-timer driver circuits in LTspice." loading="lazy">
+                <figcaption>The two 555-timer driver circuits in LTspice.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/spectrometer-pcb.png" alt="The driver PCB I laid out in Altium." loading="lazy">
+                <figcaption>The driver PCB I laid out in Altium.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Embedded systems</div><div class="year">2026</div></div>
+          <div>
+            <h3>Qub-It &mdash; a Quantum-Computing Bop-It</h3>
+            <p class="desc">
+              A team-built educational spin on Bop-It that makes single-qubit mechanics tangible: a 3D-printed Bloch sphere whose LEDs light along the X, Y, and Z axes to show the qubit's state, driven from a handheld controller with three rotary encoders for the X/Y/Z gates and three basis-measurement buttons. A laser hitting a photodiode initializes the qubit, the shrinking round timer stands in for decoherence, and a measurement collapses the state probabilistically. My part was the system architecture and firmware — the ATmega finite-state machine, the audio and LCD subsystems, and the LED dimming — plus the photodiode initialization, the PCB schematic, and a second board revision. It doubles as an outreach tool for introducing qubits to students.
+            </p>
+            <div class="tags"><span>ATmega</span><span>finite-state machine</span><span>PCB</span><span>3D printing</span><span>quantum outreach</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/qubit-device.jpg" alt="The finished Qub-It — a Bloch-sphere display and its handheld gate controller." loading="lazy">
+                <figcaption>The finished Qub-It — a Bloch-sphere display and its handheld gate controller.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/qubit-pcb.jpg" alt="The controller PCB." loading="lazy">
+                <figcaption>The controller PCB.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/qubit-fsm.png" alt="The game's finite-state-machine firmware design." loading="lazy">
+                <figcaption>The game's finite-state-machine firmware design.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Optics</div><div class="year">2025</div></div>
+          <div>
+            <h3>Single-photon interference</h3>
+            <p class="desc">
+              A single-photon interference study involving recording single- and double-slit diffraction patterns photon-by-photon with a photomultiplier tube, then fitting them quantitatively — a hands-on look at where classical optics meets quantum behavior (PHYS1361).
+            </p>
+            <div class="tags"><span>single &amp; double slit</span><span>photon counting</span><span>PMT</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g09.jpg" alt="The Photomultiplier Tube." loading="lazy">
+                <figcaption>The Photomultiplier Tube.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/single-slit.jpg" alt="Single-slit diffraction — photon counts vs. position (points) with a fit." loading="lazy">
+                <figcaption>Single-slit diffraction — photon counts vs. position (points) with a fit.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/double-slit.jpg" alt="Double-slit interference — fringes under the single-slit envelope, with a fit." loading="lazy">
+                <figcaption>Double-slit interference — fringes under the single-slit envelope, with a fit.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Optics</div><div class="year">2025</div></div>
+          <div>
+            <h3>Michelson Interferometer</h3>
+            <p class="desc">
+              Measuring the coherence length and coherence time of several sources with a Michelson interferometer (PHYS1361).
+            </p>
+            <div class="tags"><span>Michelson interferometer</span><span>coherence</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g31.jpg" alt="The Michelson interferometer — schematic." loading="lazy">
+                <figcaption>The Michelson interferometer — schematic.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g32.jpg" alt="The Michelson interferometer optics." loading="lazy">
+                <figcaption>The Michelson interferometer optics.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="rail"><div class="domain">Atomic physics</div><div class="year">2025</div></div>
+          <div>
+            <h3>Optical pumping of Nd:YAG</h3>
+            <p class="desc">
+              An atomic and optical physics lab on optical pumping and fluorescence of an Nd:YAG rod — population inversion, stimulated emission, and a fluorescence-decay lifetime measured on a photodiode and oscilloscope (PHYS1361).
+            </p>
+            <div class="tags"><span>optical pumping</span><span>Nd:YAG</span><span>fluorescence lifetime</span><span>AMO lab</span></div>
+            <div class="shot-grid">
+              <figure class="shot">
+                <img src="images/gallery/g33.jpg" alt="Optical pumping — an Nd:YAG rod glowing." loading="lazy">
+                <figcaption>Optical pumping setup.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g34.jpg" alt="An oscilloscope trace — the fluorescence decay." loading="lazy">
+                <figcaption>Oscilloscope trace — the fluorescence decay.</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="images/gallery/g35.jpg" alt="Photodetector voltage vs. time — the Nd:YAG fluorescence." loading="lazy">
+                <figcaption>Photodetector voltage vs. time — the Nd:YAG fluorescence.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- ===== ABOUT ===== -->
+    <!-- ============================================================== -->
+    <section id="about" class="sec">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>About</h2>
+        </div>
+        <div class="about-grid">
+          <div class="bio">
+            <p>
+              I'm Jannet — an engineering physics major at the University of Pittsburgh, with minors
+              in physics and electrical engineering and certificates in photonics and in quantum
+              computing and information. What pulls me toward experiment is the apparatus itself: I
+              like designing and building the instruments that make the measurements — testing how
+              real physics squares with theory, and turning that physics into new devices. Quantum
+              sensing sits right where optics, electronics, and code meet.
+            </p>
+            <p>
+              I've been in the Dutt Lab since January 2024, working mostly on NV centers in diamond — pulsed and
+              CW ODMR, confocal microscopy, wide-field imaging, and the FastAPI control layer that lets the whole bench talk
+              to itself. Along the way I've tuned dye lasers, laid out PCBs, run CFD and thermal
+              simulations in SOLIDWORKS, and written a good deal of the software the lab runs on. I'm
+              currently getting data for a first-author manuscript on an adiabatic NV DEER experiment.
+            </p>
+            <p>
+              Outside the lab, I spent a summer studying engineering at Charles University in Prague and ran 
+              quantum-computing outreach events for middle schoolers.
+              I like teaching almost as much as building — writing the SOPs and training guides that get
+              new researchers up to speed is some of the work I'm proudest of.
+            </p>
+          </div>
+          <aside class="facts">
+            <dl>
+              <dt>Education</dt>
+              <dd>BS Engineering Physics, University of Pittsburgh. Expected April 2027 · GPA 3.912/4.000</dd>
+              <dt>Minors</dt>
+              <dd>Physics · Electrical Engineering</dd>
+              <dt>Certificates</dt>
+              <dd>Photonics · Quantum Computing &amp; Quantum Information</dd>
+              <dt>Currently</dt>
+              <dd>Adiabatic NV DEER experiments in the Dutt Lab</dd>
+              <dt>Applying to</dt>
+              <dd>Physics PhD programs · Fall 2027</dd>
+              <dt>Languages</dt>
+              <dd>Arabic (native) · English (fluent) · French (fluent)</dd>
+              <dt>Based in</dt>
+              <dd>Pittsburgh, Pennsylvania</dd>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- ===== TOOLKIT ===== -->
+    <!-- ============================================================== -->
+    <section id="toolkit" class="band">
+      <div class="wrap sec">
+        <div class="sec-head">
+          <h2>Toolkit</h2>
+          <p>The instruments, software, and design tools I reach for most.</p>
+        </div>
+        <div class="kit">
+          <div class="kit-group">
+            <h3>Instrumentation &amp; control</h3>
+            <div class="chips">
+              <span>Python</span><span>ADbasic</span><span>FastAPI servers</span><span>PID control</span>
+              <span>Waveform generation</span><span>GPIB · USB · LAN · RS232 · PXI</span>
+            </div>
+          </div>
+          <div class="kit-group">
+            <h3>Hardware &amp; electronics</h3>
+            <div class="chips">
+              <span>Altium PCB design</span><span>LTspice</span><span>Analog / digital circuits</span>
+              <span>VHDL</span><span>Quartus</span><span>Soldering</span>
+            </div>
+          </div>
+          <div class="kit-group">
+            <h3>Simulation &amp; CAD</h3>
+            <div class="chips">
+              <span>SOLIDWORKS (CFD · static · thermal)</span><span>ANSYS Mechanical</span>
+              <span>Granta EduPack</span><span>Autodesk</span>
+            </div>
+          </div>
+          <div class="kit-group">
+            <h3>Quantum &amp; optics</h3>
+            <div class="chips">
+              <span>NV centers</span><span>Confocal microscopy</span><span>ODMR</span><span>Interferometry</span>
+              <span>AOMs</span><span>Wavemeters</span><span>Spectrometers</span>
+              <span>Vacuum systems</span><span>EMCCD cameras</span><span>Arbitrary waveform generators</span>
+            </div>
+          </div>
+          <div class="kit-group">
+            <h3>Programming</h3>
+            <div class="chips">
+              <span>Python</span><span>C++</span><span>MATLAB</span><span>ADbasic</span><span>Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- ===== RECOGNITION (manuscript + honors) ===== -->
+    <!-- ============================================================== -->
+    <section id="recognition" class="sec">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Recognition</h2>
+        </div>
+
+        <div class="manu">
+          <span class="mark">Manuscript · in preparation</span>
+          <div>
+            <h3>First-author paper on an adiabatic NV DEER experiment</h3>
+            <p>In preparation, expected Fall 2026 — my first lead-author contribution, on double
+               electron–electron resonance with NV centers.</p>
+          </div>
+        </div>
+
+        <ul class="honors">
+          <li><span class="h-name">Gloria &amp; Mark Tressler Scholarship, Swanson School of Engineering</span><span class="h-date">2025 – 2027</span></li>
+          <li><span class="h-name">Sigma Pi Sigma Physics Honor Society</span><span class="h-date">Spring 2026 – present</span></li>
+          <li><span class="h-name">Swanson School of Engineering Honor Student</span><span class="h-date">Aug 2024 – present</span></li>
+          <li><span class="h-name">Dean's List</span><span class="h-date">Aug 2023 – present</span></li>
+          <li><span class="h-name">TRIO National Scholarship Award</span><span class="h-date">Oct 2024</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- ===== CONTACT ===== -->
+    <!-- ============================================================== -->
+    <section id="contact" class="sec contact">
+      <div class="wrap">
+        <h2>Graduate study &amp; research inquiries</h2>
+        <p class="invite">
+          My research interests are in experimental quantum sensing, quantum information, and precision
+          measurement. I welcome correspondence from faculty and research groups considering graduate
+          applicants for Fall 2027, and I am glad to provide additional materials on request.
+        </p>
+        <a class="cmail" href="mailto:JAT332@pitt.edu">JAT332@pitt.edu</a>
+        <div class="cmeta">
+          <a href="tel:+17028077207">(702) 807-7207</a>
+          <span>Pittsburgh, PA</span>
+          <a href="documents/Jannet-Trabelsi-CV.pdf" target="_blank" rel="noopener">Full CV (PDF)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- lightbox overlay (populated by the script below) -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+    <button type="button" class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrap foot-row">
+      <span class="colophon">&copy; 2026 Jannet Trabelsi · Pittsburgh, Pennsylvania</span>
+      <span>Updated September 2026</span>
+    </div>
+  </footer>
+
+  <!-- ===== BEHAVIOR: hero draw-in + mobile menu (small, optional) ===== -->
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // One orchestrated moment: the ODMR fit curve draws itself in on load.
+      var plot = document.querySelector('.plot');
+      var fit  = document.getElementById('odmrFit');
+      if (plot && fit && !reduce) {
+        plot.classList.add('animate-in');
+        try {
+          var L = fit.getTotalLength();
+          fit.style.strokeDasharray  = L;
+          fit.style.strokeDashoffset = L;
+        } catch (e) { /* if measurement fails, curve just shows statically */ }
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            plot.classList.add('play');
+            fit.style.strokeDashoffset = '0';
+          });
+        });
+      }
+
+      // Mobile menu toggle
+      var btn = document.querySelector('.nav-toggle');
+      var nav = document.getElementById('site-nav');
+      if (btn && nav) {
+        btn.addEventListener('click', function () {
+          var open = nav.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        nav.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            nav.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      // Gallery lightbox
+      var lb = document.getElementById('lightbox');
+      if (lb) {
+        var lbImg = document.getElementById('lbImg');
+        var lbCap = document.getElementById('lbCap');
+        var lbClose = document.getElementById('lbClose');
+        var openLb = function (src, cap) {
+          lbImg.src = src; lbImg.alt = cap || ''; lbCap.textContent = cap || '';
+          lb.classList.add('open'); document.body.style.overflow = 'hidden';
+        };
+        var closeLb = function () {
+          lb.classList.remove('open'); lbImg.removeAttribute('src'); document.body.style.overflow = '';
+        };
+        document.querySelectorAll('.shot img').forEach(function (im) {
+          im.addEventListener('click', function () {
+            var cap = im.getAttribute('alt') || '';
+            var fig = im.closest('figure');
+            if (fig) { var fc = fig.querySelector('figcaption'); if (fc) cap = fc.textContent; }
+            openLb(im.getAttribute('src'), cap);
+          });
+        });
+        lbClose.addEventListener('click', closeLb);
+        lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
+      }
+    })();
+  </script>
+</body>
+</html>
